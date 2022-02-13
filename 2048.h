@@ -20,8 +20,12 @@ private:
     void Slide(int);
     void move(int);
     bool movable(int);
-    bool combine_col();
-    bool combine_row();
+    bool combine_row(int);
+    bool combine_col(int);
+    bool combine_col_left();
+    bool combine_col_right();
+    bool combine_row_up();
+    bool combine_row_down();
     void appear();
     void updateRank();
 public:
