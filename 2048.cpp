@@ -328,16 +328,16 @@ void Game::play(){
     while(cmd != 'q' && cmd != 27){
         cmd = getch();
         system ("CLS");
-        if(cmd == 'w' || cmd == KEY_UP){
+        if(cmd == 'w' || cmd == 'W' || cmd == KEY_UP){
             this -> move(2);
         }
-        else if(cmd == 'a' || cmd == KEY_LEFT){
+        else if(cmd == 'a' || cmd == 'A'|| cmd == KEY_LEFT){
             this -> move(4);
         }
-        else if(cmd == 'd' || cmd == KEY_RIGHT){
+        else if(cmd == 'd' || cmd == 'D'|| cmd == KEY_RIGHT){
             this -> move(6);
         }
-        else if (cmd == 's' || cmd == KEY_DOWN){
+        else if (cmd == 's' || cmd == 'S' || cmd == KEY_DOWN){
             this -> move(8);
         }
         else{
