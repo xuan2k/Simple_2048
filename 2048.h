@@ -15,8 +15,7 @@ private:
     int max;
 private: 
     bool isEndgame();
-    //direction: 2 for up, 8 for down, 4 for left and 6 for right
-    bool isEqual(int, int, int);
+    bool isEqual(int, int, int);   //direction: 2 for up, 8 for down, 4 for left and 6 for right
     void bubble(int, int);
     void Slide(int);
     void move(int);
