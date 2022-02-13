@@ -327,7 +327,6 @@ void Game::play(){
     char cmd;
     while(cmd != 'q' && cmd != 27){
         cmd = getch();
-        system ("CLS");
         if(cmd == 'w' || cmd == 'W' || cmd == KEY_UP){
             this -> move(2);
         }
@@ -343,6 +342,7 @@ void Game::play(){
         else{
             continue;
         }
+        system ("CLS");
         this -> show_board();
         if(this -> isEndgame()){
             break;
