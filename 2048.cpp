@@ -193,11 +193,11 @@ void Game::move(int direction){
     bool combined = false;
     bool movable = this -> movable(direction);
     if(direction == 2 || direction == 8){
-        combined = this -> combine_row();
+        combined = this -> combine_row(direction);
         this -> Slide(direction);
     }
     else{
-        combined = this -> combine_col();
+        combined = this -> combine_col(direction);
         this -> Slide(direction);
     }
     if(!movable && !combined){
@@ -271,7 +271,25 @@ bool Game::movable(int direction){
     return false;
 }
 
-bool Game::combine_row(){
+bool Game::combine_row(int direction){
+    if(direction == 2){
+        return this -> combine_row_up();
+    }
+    else{
+        return this -> combine_row_down();
+    }
+}
+
+bool Game::combine_col(int direction){
+    if(direction == 4){
+        return this -> combine_col_left();
+    }
+    else{
+        return this -> combine_col_right();
+    }
+}
+
+bool Game::combine_row_up(){
     bool combined = false;
     for(int col = 0; col < GAME_SIZE; col++){
         int prev = this -> board[0][col];
@@ -296,7 +314,32 @@ bool Game::combine_row(){
     return combined;
 }
 
-bool Game::combine_col(){
+bool Game::combine_row_down(){
+    bool combined = false;
+    for(int col = 0; col < GAME_SIZE; col++){
+        int prev = this -> board[GAME_SIZE - 1][col];
+        int prev_row = GAME_SIZE - 1;
+        for(int row = GAME_SIZE - 2; row >= 0; row--){
+            if(this -> board[row][col] == 0){
+                continue;
+            }
+            if(prev == this -> board[row][col]){
+                this -> board[prev_row][col] = 2*prev;
+                this -> point += 2*prev;
+                if(this -> max < 2*prev){
+                    this -> max = 2*prev;
+                }
+                this -> board[row][col] = 0;
+                combined = true;
+            }
+            prev = this -> board[row][col];
+            prev_row = row;
+        }
+    }
+    return combined;
+}
+
+bool Game::combine_col_left(){
     bool combined = false;
     for(int row = 0; row < GAME_SIZE; row++){
         int prev = this -> board[row][0];
@@ -320,6 +363,32 @@ bool Game::combine_col(){
     }
     return combined;
 }
+
+bool Game::combine_col_right(){
+    bool combined = false;
+    for(int row = 0; row < GAME_SIZE; row++){
+        int prev = this -> board[row][GAME_SIZE - 1];
+        int prev_col = GAME_SIZE - 1;
+        for(int col = GAME_SIZE - 2; col >= 0; col--){
+            if(this -> board[row][col] == 0){
+                continue;
+            }
+            if(prev == this -> board[row][col]){
+                this -> board[row][prev_col] = 2*prev;
+                this -> point += 2*prev;
+                if(this -> max < 2*prev){
+                    this -> max = 2*prev;
+                }
+                this -> board[row][col] = 0;
+                combined = true;
+            }
+            prev = this -> board[row][col];
+            prev_col = col;
+        }
+    }
+    return combined;
+}
+
 
 void Game::play(){
     this -> show_board();
