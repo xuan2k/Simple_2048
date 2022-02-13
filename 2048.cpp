@@ -386,22 +386,30 @@ void Game::appear(){
 
 void Game::showrank(){
     ifstream file("rank.txt");
-    cout << "--- Leader board ---\n";
-    for(int i = 0; i < 10; i++){
-        string tmp;
-        getline(file, tmp);
-        cout << "Top " << i + 1 << ": " << tmp << endl;
+    if(file){            
+        cout << "--- Leader board ---\n";
+        for(int i = 0; i < 10; i++){
+            string tmp;
+            getline(file, tmp);
+            cout << "Top " << i + 1 << ": " << tmp << endl;
+        }
+    }
+    else{
+        this -> updateRank();
+        this -> showrank();
     }
     file.close();
 }
 
 void Game::updateRank(){    
     ifstream file("rank.txt");
-    int rank[10];
-    for(int i = 0; i < 10; i++){
-        string tmp;
-        getline(file, tmp);
-        rank[i] = stoi(tmp);
+    int rank[10] {0};
+    if(file){
+        for(int i = 0; i < 10; i++){
+            string tmp;
+            getline(file, tmp);
+            rank[i] = stoi(tmp);
+        }
     }
     for(int i = 0; i < 10; i++){
         if(this -> point > rank[i]){
@@ -409,7 +417,6 @@ void Game::updateRank(){
             break;
         }
     }
-    cerr << endl;
     file.close();
     ofstream out("rank.txt");
     out << rank[0];
@@ -443,14 +450,6 @@ int main(){
         }  
         newGame.play();
         cout << "Wanna try again? Please press 'c' to continue!\nPress 'r' to show the leader board\nPress 'q' to quit.\n";
-        c = getch();
-        if(c == 'q'){
-            play = false;
-        }
-        if(c == 'r'){
-            newGame.showrank();
-            continue;
-        }
     }
     system("CLS");
     cout << "Thank for playing our game!\n";
