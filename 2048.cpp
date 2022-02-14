@@ -470,7 +470,7 @@ void Game::showrank(){
     file.close();
 }
 
-void Game::updateRank(){    
+void Game::updateRank(){  
     ifstream file("rank.txt");
     int rank[10] {0};
     if(file){
@@ -480,10 +480,16 @@ void Game::updateRank(){
             rank[i] = stoi(tmp);
         }
     }
+    bool replace = false;
+    int prev;
     for(int i = 0; i < 10; i++){
-        if(this -> point > rank[i]){
+        if(!replace && this -> point > rank[i]){
+            prev = rank[i];
             rank[i] = this -> point;
-            break;
+            replace = true;
+        }
+        else if(replace){
+            swap(rank[i], prev);
         }
     }
     file.close();
